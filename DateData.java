@@ -2,7 +2,7 @@
 /**
  * Created by yogesh on 13 Mar, 2017.
  */
-public class NpDateData {
+public class DateData {
 
     public static final int[] englishYear	= new int[]{
             31,28,31,30,31,30,31,31,30,31,30,31

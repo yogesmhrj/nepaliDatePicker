@@ -1,4 +1,3 @@
-package com.vedamic.testcaseactivity.calendar;
 
 /**
  * Created by yogesh on 04 Apr, 2017.
@@ -46,8 +45,8 @@ public class DateFormat {
             dayStr = "0"+day;
         }
 
-        return "बि. सं. "+Extra.convertRomanIntoDevanagari(year+"")+" साल, "
-                +NpDateData.getNepaliMonthLtr(month)+" महिना "+
+        return "बि. सं. "+Extra.convertRomanIntoDevanagari(year)+" साल, "
+                + DateData.getNepaliMonthLtr(month)+" महिना "+
                 Extra.convertRomanIntoDevanagari(dayStr)+" गते ";
     }
 

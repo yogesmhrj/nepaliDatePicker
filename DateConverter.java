@@ -1,7 +1,8 @@
-package com.vedamic.testcaseactivity.calendar;
 
-import static com.vedamic.testcaseactivity.calendar.NpDateData.englishLeapYear;
-import static com.vedamic.testcaseactivity.calendar.NpDateData.englishYear;
+import android.support.annotation.NonNull;
+
+import static com.vedamic.chhimekbank.library.calender.DateData.englishLeapYear;
+import static com.vedamic.chhimekbank.library.calender.DateData.englishYear;
 
 /**
  *
@@ -26,7 +27,7 @@ public class DateConverter {
      * @param year
      * @return
      */
-    public boolean isLeapYear(int year){
+    public static boolean isLeapYear(int year){
 
         if (year % 100 == 0)
         {
@@ -71,6 +72,25 @@ public class DateConverter {
     }
 
     /**
+     * Converts the A.D. date into B.S. date.
+     * <br>
+     * The A.D. date must be in format YYYY-MM-DD
+     * @param adDate
+     * @return The converted date, null if any exceptions or invalid data.
+     */
+    public Date adToBs(@NonNull  String adDate) throws UnsupportedDateException {
+        String[] parts = adDate.split("-");
+        if(parts.length < 2){
+            return null;
+        }
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
+
+        return adToBs(year,month,day);
+    }
+
+    /**
      * Convert the date from AD to BS.
      * <br><br>
      * Currently the supported dates are from 1944 to 2033
@@ -103,7 +123,7 @@ public class DateConverter {
             // count total days from the default date year to the (current year - 1)
             for(int i=0; i < (currentYear - defaultEnglishYear); i++){
                 //total days for month calculation...(english)
-                if(this.isLeapYear(defaultEnglishYear + i)){
+                if(isLeapYear(defaultEnglishYear + i)){
                     //year is leap year
                     for(int j = 0; j < 12; j++){
                         totalEnglishDays += englishLeapYear[j];
@@ -119,7 +139,7 @@ public class DateConverter {
             //System.out.println(totalEnglishDays);
             // count total no. of days for the current years before the ongoing month
             for(int i = 0; i < (currentMonth - 1); i++){
-                if(this.isLeapYear(currentYear)){
+                if(isLeapYear(currentYear)){
                     totalEnglishDays += englishLeapYear[i];
                 }
                 else{
@@ -142,7 +162,7 @@ public class DateConverter {
             // count nepali date from array
             for(int yearIndex = 0; totalEnglishDays > 0; totalEnglishDays--){
                 //calculate the days present the monthIndex for the yearIndex
-                daysInMonth = NpDateData.BS_YEARS_ARRAY[yearIndex][calculatedNepaliMonth];
+                daysInMonth = DateData.BS_YEARS_ARRAY[yearIndex][calculatedNepaliMonth];
                 //for each english day increment the nepali day as well
                 calculatedNepaliDay++;
                 dayOfWeek++;
@@ -177,6 +197,25 @@ public class DateConverter {
     }
 
     /**
+     * Converts the B.S. date into A.D. date.
+     * <br>
+     * The B.S. date must be in format YYYY-MM-DD
+     * @param bsDate
+     * @return The converted date, null if any exceptions or invalid data.
+     */
+    public Date bsToAd(@NonNull  String bsDate) throws UnsupportedDateException {
+        String[] parts = bsDate.split("-");
+        if(parts.length < 2){
+            return null;
+        }
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
+
+        return bsToAd(year,month,day);
+    }
+
+    /**
      * Method to convert BS date into AD date
      * <br><br>
      * Currently the supported dates are from 2000 to 2089
@@ -208,12 +247,12 @@ public class DateConverter {
             int i = 0;
             for(i=0;  i<(currentYear- defaultNepaliYear);  i++){
                 for(int j=1;  j<=12;  j++){
-                    totalNepaliDays +=  NpDateData.BS_YEARS_ARRAY[i][j];
+                    totalNepaliDays +=  DateData.BS_YEARS_ARRAY[i][j];
                 }
             }
 
             for(int j=1;  j < currentMonth;  j++){
-                totalNepaliDays +=  NpDateData.BS_YEARS_ARRAY[i][j];
+                totalNepaliDays +=  DateData.BS_YEARS_ARRAY[i][j];
             }
 
             totalNepaliDays += currentDay;
@@ -228,7 +267,7 @@ public class DateConverter {
 
             while(totalNepaliDays != 0){
 
-                if( this.isLeapYear(calculatedEnglishYear))
+                if(isLeapYear(calculatedEnglishYear))
                 {
                     daysInMonth =  englishLeapYear[calculatedEnglishMonth - 1];
                 }
@@ -282,24 +321,24 @@ public class DateConverter {
             this.FORMAT = format;
 
             if(this.FORMAT == DATE_AD){
-                this.MONTH_STR =  NpDateData.getEnglishMonth(month);
+                this.MONTH_STR =  DateData.getEnglishMonth(month);
             }
 
             if(this.FORMAT == DATE_AD){
-                this.MONTH_STR =  NpDateData.getEnglishMonth(month);
+                this.MONTH_STR =  DateData.getEnglishMonth(month);
             }
 
-            this.DAY_OF_WEEK_STR =  NpDateData.getEnglishDayOfTheWeek(dayOfWeek);
+            this.DAY_OF_WEEK_STR =  DateData.getEnglishDayOfTheWeek(dayOfWeek);
         }
 
-        public String getNepaliMonth(){return NpDateData.getNepaliMonth(this.MONTH);}
+        public String getNepaliMonth(){return DateData.getNepaliMonth(this.MONTH);}
 
         public String getEnglishMonth(){
-            return NpDateData.getEnglishMonth(this.MONTH);
+            return DateData.getEnglishMonth(this.MONTH);
         }
 
         public String getDayOfTheWeek(){
-            return NpDateData.getEnglishDayOfTheWeek(this.DAY_OF_WEEK);
+            return DateData.getEnglishDayOfTheWeek(this.DAY_OF_WEEK);
         }
 
         public String toString(){
@@ -318,12 +357,6 @@ public class DateConverter {
         }
     }
 
-    public static class UnsupportedDateException extends Exception {
-
-        public UnsupportedDateException(String detailMessage) {
-            super("UnsupportedDateException : "+detailMessage);
-        }
-    }
 
 
 }

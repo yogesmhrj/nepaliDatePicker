@@ -1,4 +1,3 @@
-package com.vedamic.testcaseactivity.calendar;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -45,8 +44,8 @@ public class NpDatePickerDialog extends AlertDialog.Builder{
     public NpDatePickerDialog(@NonNull Context context, int pickedYear, int pickedMonth, int pickedDay, OnNpDateSetListener listener) {
         this(context);
         //set the proper picked year
-        PICKED_YEAR = pickedYear > NpDateData.getMaxYear() ? NpDateData.getMaxYear() : pickedYear;
-        PICKED_DAY = pickedYear < NpDateData.getMinYear() ? NpDateData.getMinYear() : pickedYear;
+        PICKED_YEAR = pickedYear > DateData.getMaxYear() ? DateData.getMaxYear() : pickedYear;
+        PICKED_DAY = pickedYear < DateData.getMinYear() ? DateData.getMinYear() : pickedYear;
         //set the proper month
         PICKED_MONTH = pickedMonth > 12 ? 12 : pickedMonth;
         PICKED_MONTH = pickedMonth < 1 ? 1 : pickedMonth;
@@ -194,7 +193,7 @@ public class NpDatePickerDialog extends AlertDialog.Builder{
             return;
         }
         try {
-            this.dayPicker.setMaxValue(NpDateData.BS_YEARS_ARRAY[year - 2000][month]);
+            this.dayPicker.setMaxValue(DateData.BS_YEARS_ARRAY[year - 2000][month]);
         }catch (ArrayIndexOutOfBoundsException e){
             Log.e(TAG, "fillDaysInPicker: "+e.getMessage());
             e.printStackTrace();

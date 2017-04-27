@@ -1,4 +1,3 @@
-package com.vedamic.testcaseactivity.calendar;
 
 import android.util.Log;
 
