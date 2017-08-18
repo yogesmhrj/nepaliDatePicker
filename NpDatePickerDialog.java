@@ -115,6 +115,7 @@ public class NpDatePickerDialog extends AlertDialog.Builder{
         this.yearPicker.setMaxValue(2090);
         this.yearPicker.setMinValue(2000);
         this.yearPicker.setWrapSelectorWheel(false);
+	this.yearPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         this.yearPicker.setValue(PICKED_YEAR);
         Log.d(TAG, "createView: picked year "+PICKED_YEAR);
         this.yearPicker.setOnValueChangedListener(yearPickedListener);
@@ -135,8 +136,9 @@ public class NpDatePickerDialog extends AlertDialog.Builder{
         this.monthPicker.setLayoutParams(wrapContentParams);
         this.monthPicker.setMaxValue(12);
         this.monthPicker.setMinValue(1);
-        this.yearPicker.setValue(PICKED_MONTH);
+        this.monthPicker.setValue(PICKED_MONTH);
         this.monthPicker.setOnValueChangedListener(monthPickedListener);
+	this.monthPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         monthLayout.addView(this.monthPicker);
 
         layout.addView(monthLayout);
@@ -154,8 +156,9 @@ public class NpDatePickerDialog extends AlertDialog.Builder{
         this.dayPicker.setLayoutParams(wrapContentParams);
         this.dayPicker.setMaxValue(32);
         this.dayPicker.setMinValue(1);
-        this.yearPicker.setValue(PICKED_DAY);
+        this.dayPicker.setValue(PICKED_DAY);
         this.dayPicker.setOnValueChangedListener(dayPickedListener);
+	this.dayPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         daylayout.addView(this.dayPicker);
 
         layout.addView(daylayout);
